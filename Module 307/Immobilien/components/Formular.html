@@ -1,0 +1,82 @@
+<div id="form-content"></div>
+<script id="form-template" type="x-tmpl-mustache">
+  {{#data}}
+  <div class="uk-child-width-1-1 uk-text-center" uk-grid>
+    <!-- objekt --->
+    <div>
+      <input
+        id="objekt"
+        name="objekt"
+        class="uk-input uk-form-blank uk-form-width-large"
+        type="text"
+        placeholder="Objekt"
+        {{#objekt}}value="{{objekt}}"{{/objekt}}
+        required
+      />
+    </div>
+  </div>
+  <!-- adresse  -->
+  <div class="uk-child-width-expand@s uk-text-center" uk-grid>
+    <div>
+      <input
+        id="adresse"
+        name="adresse"
+        class="uk-input uk-form-blank uk-form-width-medium"
+        type="text"
+        placeholder="adresse"
+        {{#adresse}}value="{{adresse}}"{{/adresse}}
+        required
+      />
+    </div>
+
+    <!-- kategorie --->
+    <div>
+      <div id="kategorie" name="kategorie" class="browser-default" uk-form-custom="target: > * > span:last-child">
+        <select>
+          <option value="Wohnung">Wohnung</option>
+          <option value="Haus">Haus</option>
+          <option value="Objekt">Objekt</option>
+        </select>
+        <span class="uk-link">
+          <span uk-icon="icon: pencil"></span>
+          <span></span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- plz  -->
+  <div class="uk-child-width-expand@s uk-text-center" uk-grid>
+    <div>
+      <input
+        id="plz"
+        name="plz"
+        class="uk-input uk-form-blank uk-form-width-medium"
+        type="text"
+        placeholder="plz"
+        {{#plz}}value="{{plz}}"{{/plz}}
+        required
+      />
+    </div>
+
+    <!-- Bemerkung  -->
+    <div class="uk-child-width-expand@s uk-text-center" uk-grid>
+      <div>
+        <input
+          id="bemerkung"
+          name="bemerkung"
+          class="uk-input uk-form-blank uk-form-width-medium"
+          type="text"
+          placeholder="bemerkung"
+          {{#bemerkung}}value="{{bemerkung}}"{{/bemerkung}}
+        />
+      </div>
+    </div>
+  </div>
+
+      <!-- hidden id field -->
+    <div></div>
+    <input id="id" name="id" type="hidden" {{#id}}value="{{id}}"{{/id}}>
+
+  {{/data}}
+</script>

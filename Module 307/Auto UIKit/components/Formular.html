@@ -1,0 +1,180 @@
+<div id="form-content"></div>
+<script id="form-template" type="x-tmpl-mustache">
+  {{#data}}
+  <div class="uk-child-width-expand@s uk-text-center" uk-grid>
+    <!-- brand --->
+    <div>
+      <input
+        id="brand"
+        name="name"
+        class="uk-input uk-form-blank uk-form-width-medium"
+        type="text"
+        placeholder="Marke"
+        {{#name}}value="{{name}}"{{/name}}
+        required
+      />
+    </div>
+    <!-- color picker --->
+    <div>
+      <label class="uk-form-label" for="colour">Farbe </label>
+      <input
+        id="colour"
+        name="farbe"
+        class="uk-input uk-form-blank uk-form-width-small"
+        type="color"
+        {{#farbe}}value="{{farbe}}"{{/farbe}}
+        required
+      />
+    </div>
+  </div>
+  <!-- fuel  -->
+  <div class="uk-child-width-expand@s uk-text-center" uk-grid>
+    <div>
+      <input
+        id="fuel"
+        name="kraftstoff"
+        class="uk-input uk-form-blank uk-form-width-medium"
+        type="text"
+        placeholder="Kraftstoff"
+        {{#kraftstoff}}value="{{kraftstoff}}"{{/kraftstoff}}
+        required
+      />
+    </div>
+
+    <!-- type --->
+    <div>
+      <div id="type" name="type" class="browser-default" uk-form-custom="target: > * > span:last-child">
+        <select>
+          <option value="bus">Bus</option>
+          <option value="suv">SUV</option>
+          <option value="limousine">Limousine</option>
+        </select>
+        <span class="uk-link">
+          <span uk-icon="icon: pencil"></span>
+          <span></span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="uk-child-width-expand@s uk-text-center" uk-grid>
+    <div>
+      <input
+        id="tank"
+        name="tank"
+        class="uk-input uk-form-blank uk-form-width-medium"
+        type="text"
+        placeholder="Tank"
+        {{#tank}}value="{{tank}}"{{/tank}}
+        min="0"
+        max="100"
+        required
+      />
+    </div>
+
+    <div></div>
+    <input id="id" name="id" type="hidden" {{#id}}value="{{id}}"{{/id}}>
+  </div>
+  {{/data}}
+</script>
+
+<!-- 
+<script id="form-template" type="x-tmpl-mustache">
+  {{#data}}
+      <div class="row">
+      <div class="input-field col s6">
+          <input id="name" name="name" type="text" class="validate" required {{#name}}value="{{name}}"{{/name}}>
+          <label for="name">Name</label>
+      </div>
+      <div class="input-field col s6">
+          <input id="kraftstoff" name="kraftstoff" type="text" class="validate" required {{#kraftstoff}}value="{{kraftstoff}}"{{/kraftstoff}}>
+          <label for="kraftstoff">Kraftstoff</label>
+      </div>
+  </div>
+  <div class="row">
+      <div class="input-field col s6">
+          Farbe: <input id="color" name="color" type="color" class="validate" required {{#farbe}}value="{{farbe}}"{{/farbe}}>
+      </div>
+      <div class="col s6">
+          <label>Bauart</label>
+          <select name="type" required class="browser-default">
+              <option value="" disabled selected>Bitte wählen</option>
+              <option value="SUV">SUV</option>
+              <option value="Limousine">Limousine</option>
+              <option value="Bus">Bus</option>
+          </select>
+      </div>
+  </div>
+
+  <div class="row">
+      <div class="input-field col s6">
+          <input id="tank" name="tank" type="number" class="validate" required {{#tank}}value="{{tank}}"{{/tank}}>
+          <label for="tank">Tank</label>
+      </div>
+      <input id="id" name="id" type="hidden" {{#id}}value="{{id}}"{{/id}}>
+  </div>
+  {{/data}}
+</script>
+
+<!-- 
+  <form id="Form" method="POST">
+  <div class="uk-child-width-expand@s uk-text-center" uk-grid>
+    <!-- brand -
+    <div>
+      <input
+        id="brand"
+        class="uk-input uk-form-blank uk-form-width-medium"
+        type="text"
+        placeholder="Marke"
+        required
+      />
+    </div>
+    <!-- color picker -
+    <div>
+      <label class="uk-form-label" for="colour">Farbe </label>
+      <input
+        id="colour"
+        class="uk-input uk-form-blank uk-form-width-small"
+        type="color"
+      />
+    </div>
+  </div>
+  <!-- fuel  --
+  <div class="uk-child-width-expand@s uk-text-center" uk-grid>
+    <div>
+      <input
+        id="fuel"
+        class="uk-input uk-form-blank uk-form-width-medium"
+        type="text"
+        placeholder="Kraftstoff"
+      />
+    </div>
+
+    <!-- type --
+    <div>
+      <div id="type" uk-form-custom="target: > * > span:last-child">
+        <select>
+          <option value="bus">Bus</option>
+          <option value="suv">SUV</option>
+          <option value="limousine">Limousine</option>
+        </select>
+        <span class="uk-link">
+          <span uk-icon="icon: pencil"></span>
+          <span></span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="uk-child-width-expand@s uk-text-center" uk-grid>
+    <div>
+      <input
+        id="tank"
+        class="uk-input uk-form-blank uk-form-width-medium"
+        type="number"
+        placeholder="Tank"
+      />
+    </div>
+
+    <div></div>
+  </div>
+</form>
+!-->

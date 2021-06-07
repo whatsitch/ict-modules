@@ -1,0 +1,40 @@
+/*---------- ROOT styles ----------*/
+@import "https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&amp;display=swap";
+:root {
+  --color-darker: #030303;
+  --color-dark: #1a0a2a;
+  --color-purple: #400082;
+  --color-white-d: #efdfff;
+  --color-white: #fdfbff;
+}
+
+html {
+  font-family: "Quicksand", sans-serif;
+  /*color: var(--color-white);*/
+}
+/*body {
+  background-color: var(--color-darker);
+}*/
+/*---------- general styles ----------*/
+/*.uk-h1,
+.uk-h2,
+.uk-h3,
+.uk-h4,
+.uk-h5,
+.uk-h6,
+.uk-heading-2xlarge,
+.uk-heading-large,
+.uk-heading-medium,
+.uk-heading-small,
+.uk-heading-xlarge,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-white-d);
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
+}
+*/
