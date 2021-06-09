@@ -59,8 +59,12 @@ main:    			MOV     output,#00h
 loop:				MOV        	A,input                
      				MOV        	status, A
 					MOV			P7, status
+					mov			speed, #10D
 					JBC			status.4, setBackwardDirection
 					ACALL		setForwardDirection
+loopSpeed:			JBC			status.2, setLowSpeed
+					JBC			status.3, setHighSpeed
+					
 					  
 loopStatus:        	ANL        	status, #00000011b
 					ACALL		DELAY
@@ -75,7 +79,7 @@ loopStatus:        	ANL        	status, #00000011b
 
 /*---------- DELAY ----------*/
 
-DELAY:			   	MOV 		R7, #10D
+DELAY:			   	MOV 		R7, speed
 Timer:				MOV			TMOD, #01h
 					MOV			TH0, #0DBH
 					MOV			TL0, #0FFH
@@ -86,18 +90,27 @@ TimerOverflow:		JNB			TCON.5, TimerOverflow
 					DJNZ		R7, Timer
 					RET	
 
+/*---------- CHANGE SPEED ----------*/
+
+setLowSpeed:		MOV			speed, #5D
+					JMP			loopStatus
+
+setHighSpeed:		MOV			speed, #20D
+					JMP			loopStatus
+							
+
 /*---------- BACKWARD / FORWARD DIRECTION ----------*/
 		
 setBackwardDirection:	MOV			A, direction
 						MOV			A, #11111111b
 						MOV			direction, A
 						MOV			P7, direction
-						JMP			loopStatus
+						JMP			loopSpeed
 
 setForwardDirection:	MOV			A, direction
 						ANL			A, #00h
 						MOV			direction, A
-						JMP			loopStatus
+						JMP			loopSpeed
 					
 moveForward:			mov			A, light
 						RL			A
@@ -111,7 +124,9 @@ moveBackward:			mov			A, light
 						mov			light, A
 						cpl			light.7
 						jmp			lightOutput
-											
+
+	
+										
 /*---------- STATUS ----------*/
 
 stop:				mov			P7, #00000000b
