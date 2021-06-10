@@ -19,7 +19,7 @@ NAME Lauflichtsteuerung
 
  
 
-/*----------  Deklarationen ----------*/
+/*----------  declaration ----------*/
 
 output    	equ     P2 ; output
 input     	equ     P3 ; input    
@@ -32,17 +32,18 @@ lightStatus	data	25h
 
  
 
-/*----------  Intitialisierung ----------*/
-        			ORG        0000h                ;Startadresse
+/*----------  initialisation ----------*/
+
+        			ORG        0000h                ;Startaddress
         			JMP        init
 
  
 
-        			ORG        	0100h                ;Programmanfang
+        			ORG        	0100h                ;programme start
 init:   			MOV        	WDTCN,#0DEh
         			MOV        	WDTCN,#0ADh          ;disable Watchdog
-        			MOV        	P2MDOUT,#0FFh        ;P2 8 Ausgänge push/pull
-        			MOV        	P3MDOUT,#000h        ;P3 8 Eingänge
+        			MOV        	P2MDOUT,#0FFh        ;P2 8 outputs push/pull
+        			MOV        	P3MDOUT,#000h        ;P3 8 inputs
         			MOV        	XBR2,#040h           ;enable crossbar (Koppelfeld)
 					JMP			main
 
@@ -53,16 +54,10 @@ setLightWidth:			ANL			A, #01000000b
 						SWAP		A
 						RR			A
 						RR			A
-						;RL			A
-						;RL			A
-						;RL			A
-						;RL			A
 						MOV			lightWidth, A
-						MOV			P7, lightWidth
 						JZ			defaultSpeed
 						JNB			lightStatus.7, enableCustomLightWidth
 						JNB			lightWidth.0, disableCustomLightWidth
-						
 						JMP			defaultSpeed
 
 enableCustomLightWidth:	SETB		lightStatus.7
@@ -74,20 +69,14 @@ disableCustomLightWidth:	CALL	turnLEDsOff
 							MOV		lightStatus, #00000000b
 							MOV		light, #00h
 							JMP		defaultSpeed
-
 							
 
 /*----------  Hauptprogramm ----------*/
 
-main:    			MOV     	output,#00h
-		 			;MOV			input, #00h            
+main:    			MOV     	output,#00h          
 		 			MOV			light, #00b
 					MOV			direction, #00h
 					MOV			lightWidth, #00h
-
-awaitUserInput:		MOV			input, #0FFh
-					MOV			A, input
-					jnz			awaitUserInput		; await until user disabled all LED's
 
 loop:				MOV        	A,input                
      				MOV        	status, A
@@ -164,17 +153,14 @@ moveBackward:			MOV			A, light
 						CPL			light.7
 						JMP			lightOutput
 
- 
-/*---------- LIGHT EFFECT WIDTH ----------*/
-
+/*--------------------------------------------------*/
+													 
 smallLightWidth:		RL			A
 						ANL			A, #10000001b 
 						CPL			A
 						ANL			light, A
 						RL			A
-						;CPL			light.0
 						jmp			moveOutput
-
 
 
 turnLEDsOff:		MOV			output, #00h
@@ -185,12 +171,10 @@ turnLEDsOff:		MOV			output, #00h
 /*---------- STATUS ----------*/
 
 stop:				ACALL		turnLEDsOff
-					;MOV			input, #00h
 					JMP			loop
 
 
-move:				;mov			P7, #00000001b
-					MOV			A, direction
+move:				MOV			A, direction
 					JZ			moveForward
 					JMP			moveBackward
 					MOV			light, A
@@ -198,8 +182,7 @@ lightOutput:		MOV			output, light
 					JMP			loop
 		
 
-pause:				;mov			P7, #00000010b
-					JMP			loop
+pause:				JMP			loop
  
 
 	    
