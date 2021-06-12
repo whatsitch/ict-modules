@@ -7,7 +7,6 @@ class Game
 {
 
 private:
-public:
     LED leds[4];
     Button buttons[4];
     Button startStopButton = Button(11);
@@ -17,6 +16,7 @@ public:
     GameMode mode;
     int memory[100];
     int memoryIndex = 0;
+public:
     Game()
     {
         init();
@@ -194,20 +194,19 @@ public:
     void readUserSequence()
     {
         int pressedButton;
-        boolean madeMistake = false;
-        for (size_t i = 0; i < this->memoryIndex && madeMistake == false; i++)
+        boolean wrongButtonPressed = false;
+        for (size_t i = 0; i < this->memoryIndex && wrongButtonPressed == false; i++)
         {
             pressedButton = this->getPressedButton(5000);
 
             if (pressedButton == -1 | pressedButton != this->memory[i])
             {
-                this->setStatus(OFFLINE);
+                this->setStatus(GAMEOVER);
                 this->setMode(OFF);
                 this->memoryIndex = 0;
                 memset(this->memory, 0, sizeof(this->memory));
-                Serial.println("GAMEOVER!!");
-                madeMistake = true;
-                delay(5000);
+                wrongButtonPressed = true;
+                break;
             }
         }
     }
@@ -230,9 +229,22 @@ public:
         }
     }
 
-    /*----- getter setter methods -----*/
+    void blinkLeds()
+    {
+        for (size_t i = 0; i < sizeof(this->leds); i++)
+        {
+            delay(100);
+            this->turnLedsOn();
+            delay(300);
+            this->turnLedsOff();
+            delay(100);
+        }
+    }
+
+    /*----- getter / setter methods -----*/
 
     void setStatus(GameStatus status) { this->status = status; }
+
     GameStatus getStatus() { return this->status; }
 
     void setMode(GameMode mode) { this->mode = mode; }
@@ -240,5 +252,6 @@ public:
     GameMode getMode() { return this->mode; }
 
     int getNumberOfButtons() { return sizeof(this->buttons) / sizeof(this->buttons[0]); }
+
     int getNumberOfLEDs() { return sizeof(this->leds) / sizeof(this->leds[0]); }
 };

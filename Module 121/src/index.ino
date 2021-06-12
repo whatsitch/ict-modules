@@ -19,28 +19,22 @@ void setup()
 
 void loop()
 {
-  Serial.println("gamemode status:");
-  Serial.println(game.getStatus());
   game.validateStartStopButton();
 
-  if (game.status == IDLE)
+  if (game.getStatus() == IDLE)
   {
     game.awaitUserInteraction();
   }
-  /*
-  if(game.status == INIT) {
-    game.setup();
-  }*/
 
-  if(game.status == PLAYING) {
+  if(game.getStatus() == PLAYING) {
     game.startSequence();
     delay(100);
     game.readUserSequence();
   }
 
-  if(game.status == GAMEOVER) {
-    Serial.println("index -> GAMEOVER!!!");
-    delay(8000);
+  if(game.getStatus() == GAMEOVER) {
+    game.blinkLeds();
+    game.setStatus(IDLE);
   }
 
   delay(200);
