@@ -44,6 +44,10 @@ public:
         return this->status;
     }
 
+    void setMode(GameMode mode) { this->mode = mode; }
+
+    GameMode getMode() { return this->mode; }
+
     int getNumberOfButtons()
     {
         return sizeof(this->buttons) / sizeof(this->buttons[0]);
@@ -114,32 +118,32 @@ public:
             {
                 this->turnLedsOff();
                 Serial.println("gamemode button pressed once!");
-                this->mode = LIGHT;
+                this->setMode(LIGHT);
                 this->leds[0].on();
                 if (this->gameModeButton.isPressed(100))
                 {
                     Serial.println("gamemode button pressed twice!");
                     this->leds[1].on();
-                    this->mode = SOUND;
+                    this->setMode(SOUND);
 
                     if (this->gameModeButton.isPressed(100))
                     {
                         Serial.println("gamemode button pressed third time!");
 
                         this->leds[2].on();
-                        this->mode = LIGHTANDSOUND;
+                        this->setMode(LIGHTANDSOUND);
                         //this->status = INIT;
                         if (this->gameModeButton.isPressed(50))
                         {
-                            Serial.println("gamemode button pressed twice!");
+                            Serial.println("gamemode button pressed fourth time! - resetting");
                             this->leds[1].on();
-                            this->mode = SOUND;
+                            this->setMode(OFF);
                             //this->status = INIT;
                             if (this->gameModeButton.isPressed(50))
                             {
                                 Serial.println("gamemode button pressed fourth time! - resetting");
                                 this->turnLedsOff();
-                                this->mode = OFF;
+                                this->setMode(OFF);
                                 break;
                             }
                             this->setStatus(INIT);
@@ -151,12 +155,12 @@ public:
             delay(50);
             this->leds[i].off();
 
-            if(this->mode != OFF) {
+            if(this->getMode() != OFF) {
                 Serial.println("statsu before:");
                 Serial.println(this->getStatus());
                 this->setStatus(PLAYING);
                 Serial.println("now playing with mode:");
-                Serial.println(this->mode);
+                Serial.println(this->getMode());
                 Serial.println("status now:");
                 Serial.println(this->getStatus());
             }
