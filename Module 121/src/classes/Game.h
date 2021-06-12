@@ -74,28 +74,39 @@ public:
 
     void validateStartStopButton()
     {
-        if (this->status == OFFLINE)
+        //Serial.println("validateStartStopButton");
+        if (this->getStatus() == OFFLINE)
         {
+            Serial.println("status == 0ffline");
             if (this->startStopButton.isPressed())
             {
+                Serial.println("button pressed");
                 if (this->getStatus() == OFFLINE)
                 {
                     this->setStatus(IDLE);
+                    Serial.println("Testing");
                     Serial.println(this->status);
                 }
-                else
-                {
-                    this->setStatus(OFFLINE);
-                    Serial.println("SHUTING DOWN....");
-                    delay(5000);
-                }
+                delay(1000);
             }
+            
         }
+        /*else
+        {
+            if (this->startStopButton.isPressed())
+            {
+
+                Serial.println("SHUTING DOWN....");
+                Serial.println(this->status);
+                this->setStatus(OFFLINE);
+                Serial.println(this->status);
+            }
+        }*/
     }
 
     void awaitInteraction()
     {
-        Serial.println("Await interaction");
+       // Serial.println("Await interaction");
         for (size_t i = 0; i < this->getNumberOfLEDs(); i++)
         {
             this->leds[i].on();
@@ -110,8 +121,7 @@ public:
                     Serial.println("gamemode button pressed twice!");
                     this->leds[1].on();
                     this->mode = SOUND;
-                   
-                    
+
                     if (this->gameModeButton.isPressed(100))
                     {
                         Serial.println("gamemode button pressed third time!");
@@ -127,12 +137,12 @@ public:
                             //this->status = INIT;
                             if (this->gameModeButton.isPressed(50))
                             {
-                                Serial.println("gamemode button pressed fourth time!");
+                                Serial.println("gamemode button pressed fourth time! - resetting");
                                 this->turnLedsOff();
-                                this->mode = LIGHT;
+                                this->mode = OFF;
                                 break;
                             }
-                            this->status = INIT;
+                            this->setStatus(INIT);
                             break;
                         }
                     }
@@ -140,6 +150,16 @@ public:
             }
             delay(50);
             this->leds[i].off();
+
+            if(this->mode != OFF) {
+                Serial.println("statsu before:");
+                Serial.println(this->getStatus());
+                this->setStatus(PLAYING);
+                Serial.println("now playing with mode:");
+                Serial.println(this->mode);
+                Serial.println("status now:");
+                Serial.println(this->getStatus());
+            }
         }
         this->turnLedsOff();
     }
