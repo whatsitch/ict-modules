@@ -2,6 +2,7 @@
 #include "./classes/LED.h"
 #include "./classes/Game.h"
 #include "./miscellaneous/GameStatus.h"
+#include "./miscellaneous/GameMode.h"
 
 /****************************************************************
  * 
@@ -26,13 +27,24 @@ void loop()
     game.awaitUserInteraction();
   }
 
-  if(game.getStatus() == PLAYING) {
-    game.startSequence();
+  if (game.getStatus() == PLAYING)
+  {
+    if (game.getMode() == LIGHT)
+    {
+      game.startLightSequence();
+    }
+    else if (game.getMode() == SOUND)
+    {
+    }
+    else if (game.getMode() == LIGHTANDSOUND)
+    {
+    }
     delay(100);
     game.readUserSequence();
   }
 
-  if(game.getStatus() == GAMEOVER) {
+  if (game.getStatus() == GAMEOVER)
+  {
     game.blinkLeds();
     game.setStatus(IDLE);
   }

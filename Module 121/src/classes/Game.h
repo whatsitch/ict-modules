@@ -16,6 +16,7 @@ private:
     GameMode mode;
     int memory[100];
     int memoryIndex = 0;
+
 public:
     Game()
     {
@@ -121,12 +122,12 @@ public:
         this->turnLedsOff();
     }
 
-    void startSequence()
+    /*----- LIGHT mode -----*/
+
+    void startLightSequence()
     {
         delay(500);
-        this->memory[this->memoryIndex] = (random() % 4);
-        Serial.println("Next: ");
-        Serial.println(this->memory[this->memoryIndex]);
+        this->memory[this->memoryIndex] = getRandomNumber(4);
         this->memoryIndex++;
         delay(500);
         for (size_t i = 0; i < this->memoryIndex; i++)
@@ -135,6 +136,26 @@ public:
             this->leds[memory[i]].on();
             delay(700);
             this->leds[memory[i]].off();
+        }
+    }
+
+    void readUserSequence()
+    {
+        int pressedButton;
+        boolean wrongButtonPressed = false;
+        for (size_t i = 0; i < this->memoryIndex && wrongButtonPressed == false; i++)
+        {
+            pressedButton = this->getPressedButton(5000);
+
+            if (pressedButton == -1 | pressedButton != this->memory[i])
+            {
+                this->setStatus(GAMEOVER);
+                this->setMode(OFF);
+                this->memoryIndex = 0;
+                memset(this->memory, 0, sizeof(this->memory));
+                wrongButtonPressed = true;
+                break;
+            }
         }
     }
 
@@ -191,24 +212,10 @@ public:
         return pressedButton;
     }
 
-    void readUserSequence()
+    /*----- get a random number between 0 and n -----*/
+    int getRandomNumber(int upperBound)
     {
-        int pressedButton;
-        boolean wrongButtonPressed = false;
-        for (size_t i = 0; i < this->memoryIndex && wrongButtonPressed == false; i++)
-        {
-            pressedButton = this->getPressedButton(5000);
-
-            if (pressedButton == -1 | pressedButton != this->memory[i])
-            {
-                this->setStatus(GAMEOVER);
-                this->setMode(OFF);
-                this->memoryIndex = 0;
-                memset(this->memory, 0, sizeof(this->memory));
-                wrongButtonPressed = true;
-                break;
-            }
-        }
+        return random() % upperBound;
     }
 
     /*----- LED handling -----*/
