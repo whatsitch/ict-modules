@@ -13,10 +13,14 @@ Game game = Game();
 void setup()
 {
   Serial.begin(9600);
+  /*----- initialize pseudo random number generator -----*/
+  randomSeed(analogRead(40));
 }
 
 void loop()
 {
+  Serial.println("gamemode status:");
+  Serial.println(game.getStatus());
   game.validateStartStopButton();
 
   if (game.status == IDLE)
@@ -26,10 +30,18 @@ void loop()
   /*
   if(game.status == INIT) {
     game.setup();
-  }
+  }*/
+
   if(game.status == PLAYING) {
     game.startSequence();
-  }*/
+    delay(100);
+    game.readUserSequence();
+  }
+
+  if(game.status == GAMEOVER) {
+    Serial.println("index -> GAMEOVER!!!");
+    delay(8000);
+  }
 
   delay(200);
 }

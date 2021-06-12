@@ -3,5 +3,6 @@
   "sketch": "src\\index.ino",
   "port": "COM3",
   "output": "./build",
-  "log": "./logs"
+  "log": "./logs",
+  "debugger": "jlink"
 }

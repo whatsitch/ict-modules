@@ -2,6 +2,9 @@
 #include "LED.h"
 #include "../miscellaneous/GameStatus.h"
 #include "../miscellaneous/GameMode.h"
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <time.h>
 class Game
 {
 
@@ -93,7 +96,6 @@ public:
                 }
                 delay(1000);
             }
-            
         }
         /*else
         {
@@ -110,7 +112,7 @@ public:
 
     void awaitInteraction()
     {
-       // Serial.println("Await interaction");
+        // Serial.println("Await interaction");
         for (size_t i = 0; i < this->getNumberOfLEDs(); i++)
         {
             this->leds[i].on();
@@ -133,20 +135,12 @@ public:
                         this->leds[2].on();
                         this->setMode(LIGHTANDSOUND);
                         //this->status = INIT;
-                        if (this->gameModeButton.isPressed(50))
+                        if (this->gameModeButton.isPressed(300))
                         {
                             Serial.println("gamemode button pressed fourth time! - resetting");
-                            this->leds[1].on();
+                            this->turnLedsOff();
                             this->setMode(OFF);
-                            //this->status = INIT;
-                            if (this->gameModeButton.isPressed(50))
-                            {
-                                Serial.println("gamemode button pressed fourth time! - resetting");
-                                this->turnLedsOff();
-                                this->setMode(OFF);
-                                break;
-                            }
-                            this->setStatus(INIT);
+                            delay(1500);
                             break;
                         }
                     }
@@ -155,7 +149,8 @@ public:
             delay(50);
             this->leds[i].off();
 
-            if(this->getMode() != OFF) {
+            if (this->getMode() != OFF)
+            {
                 Serial.println("statsu before:");
                 Serial.println(this->getStatus());
                 this->setStatus(PLAYING);
@@ -171,7 +166,8 @@ public:
     void startSequence()
     {
         delay(500);
-        this->memory[this->memoryIndex] = random(0, 4);
+        //srand( time(NULL) );
+        this->memory[this->memoryIndex] = (random() % 4);
         Serial.println("Next: ");
         Serial.println(this->memory[this->memoryIndex]);
         this->memoryIndex++;
@@ -195,27 +191,26 @@ public:
 
         while (currentMillis - previousMillis < delay & buttonReleased == false)
         {
-            for (size_t i = 0; i < this->getNumberOfButtons(); i++)
+            for (size_t i = 0; i < this->getNumberOfButtons() && buttonReleased == false; i++)
             {
-                Serial.println("sizeof buttons:");
+                //Serial.println("sizeof buttons:");
                 int number = this->getNumberOfButtons();
                 Serial.println(number);
-                Serial.println("sizeof leds: ");
+                //Serial.println("sizeof leds: ");
                 int number2 = this->getNumberOfLEDs();
-                Serial.println(number2);
-                Serial.println("okay=");
-                Serial.println("index:");
-                Serial.println(i);
+                // Serial.println(number2);
+                //Serial.println("okay=");
+                //Serial.println("index:");
+                //Serial.println(i);
                 if (this->buttons[i].isPressed())
                 {
-                    Serial.println("inside getPressedButton:");
-                    Serial.println("Index:");
-                    Serial.println(i);
-                    pressedButton = buttons[i].getState();
+                    //Serial.println("inside getPressedButton:");
+                    //Serial.println("Index:");
+                    //Serial.println(i);
+                    pressedButton = i;
                     Serial.println("pressed Button: ");
                     Serial.println(pressedButton);
                     this->leds[i].on();
-
                     while (currentMillis - previousMillis < delay & buttonReleased == false)
                     {
                         if (!this->buttons[i].isPressed())
@@ -231,6 +226,7 @@ public:
                     {
                         pressedButton = -1;
                     }
+                    
                 }
             }
             currentMillis = millis();
@@ -241,20 +237,30 @@ public:
 
     void readUserSequence()
     {
-        for (size_t i = 0; i < this->memoryIndex; i++)
+        int pressedButton;
+        boolean madeMistake = false;
+        for (size_t i = 0; i < this->memoryIndex && madeMistake == false; i++)
         {
             Serial.println("readUserSequence:");
+            Serial.println("loop length: ");
+            Serial.println(i);
             Serial.println("User should push:");
             Serial.println(this->memory[i]);
 
-            int pressedButton = this->getPressedButton(1000);
+            pressedButton = this->getPressedButton(5000);
 
             Serial.println("Pressed Button:");
             Serial.println(pressedButton);
 
             if (pressedButton == -1 | pressedButton != this->memory[i])
             {
-                this->status = GAMEOVER;
+                this->setStatus(OFFLINE);
+                this->setMode(OFF);
+                this->memoryIndex = 0;
+                memset(this->memory, 0, sizeof(this->memory));
+                Serial.println("GAMEOVER!!");
+                madeMistake = true;
+                delay(5000);
             }
         }
     }
