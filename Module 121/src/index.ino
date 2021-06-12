@@ -25,7 +25,7 @@ void loop()
 
   if (game.status == IDLE)
   {
-    game.awaitInteraction();
+    game.awaitUserInteraction();
   }
   /*
   if(game.status == INIT) {

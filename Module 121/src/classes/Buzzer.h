@@ -4,7 +4,6 @@
 class Buzzer {
   private:
     byte pin;
-    byte state;
   public:
     Buzzer(byte pin) {
       this->pin = pin;

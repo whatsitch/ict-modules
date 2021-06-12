@@ -2,9 +2,7 @@
 #include "LED.h"
 #include "../miscellaneous/GameStatus.h"
 #include "../miscellaneous/GameMode.h"
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <time.h>
+#include "../miscellaneous/Colour.h"
 class Game
 {
 
@@ -14,6 +12,7 @@ public:
     Button buttons[4];
     Button startStopButton = Button(11);
     Button gameModeButton = Button(10);
+
     GameStatus status;
     GameMode mode;
     int memory[100];
@@ -36,47 +35,6 @@ public:
         //this->gameModeButton = Button(10);
         //this->startStopButton = Button(13);
         //piezo pin 12
-    }
-
-    void setStatus(GameStatus status)
-    {
-        this->status = status;
-    }
-    GameStatus getStatus()
-    {
-        return this->status;
-    }
-
-    void setMode(GameMode mode) { this->mode = mode; }
-
-    GameMode getMode() { return this->mode; }
-
-    int getNumberOfButtons()
-    {
-        return sizeof(this->buttons) / sizeof(this->buttons[0]);
-    }
-    int getNumberOfLEDs()
-    {
-        return sizeof(this->leds) / sizeof(this->leds[0]);
-    }
-    void turnLedsOff()
-    {
-        for (size_t i = 0; i < sizeof(this->leds); i++)
-        {
-            this->leds[i].off();
-        }
-    }
-
-    void turnLedsOn()
-    {
-        for (size_t i = 0; i < sizeof(this->leds); i++)
-        {
-            this->leds[i].on();
-        }
-    }
-
-    void setup()
-    {
     }
 
     void validateStartStopButton()
@@ -110,7 +68,7 @@ public:
         }*/
     }
 
-    void awaitInteraction()
+    void awaitUserInteraction()
     {
         // Serial.println("Await interaction");
         for (size_t i = 0; i < this->getNumberOfLEDs(); i++)
@@ -130,14 +88,14 @@ public:
 
                     if (this->gameModeButton.isPressed(100))
                     {
-                        Serial.println("gamemode button pressed third time!");
+                        Serial.println("gamemode button pressed for the third time!");
 
                         this->leds[2].on();
                         this->setMode(LIGHTANDSOUND);
                         //this->status = INIT;
                         if (this->gameModeButton.isPressed(300))
                         {
-                            Serial.println("gamemode button pressed fourth time! - resetting");
+                            Serial.println("gamemode button pressed for the fourth time! - resetting");
                             this->turnLedsOff();
                             this->setMode(OFF);
                             delay(1500);
@@ -166,7 +124,6 @@ public:
     void startSequence()
     {
         delay(500);
-        //srand( time(NULL) );
         this->memory[this->memoryIndex] = (random() % 4);
         Serial.println("Next: ");
         Serial.println(this->memory[this->memoryIndex]);
@@ -226,7 +183,6 @@ public:
                     {
                         pressedButton = -1;
                     }
-                    
                 }
             }
             currentMillis = millis();
@@ -241,16 +197,7 @@ public:
         boolean madeMistake = false;
         for (size_t i = 0; i < this->memoryIndex && madeMistake == false; i++)
         {
-            Serial.println("readUserSequence:");
-            Serial.println("loop length: ");
-            Serial.println(i);
-            Serial.println("User should push:");
-            Serial.println(this->memory[i]);
-
             pressedButton = this->getPressedButton(5000);
-
-            Serial.println("Pressed Button:");
-            Serial.println(pressedButton);
 
             if (pressedButton == -1 | pressedButton != this->memory[i])
             {
@@ -264,4 +211,34 @@ public:
             }
         }
     }
+
+    /*----- LED handling -----*/
+
+    void turnLedsOff()
+    {
+        for (size_t i = 0; i < sizeof(this->leds); i++)
+        {
+            this->leds[i].off();
+        }
+    }
+
+    void turnLedsOn()
+    {
+        for (size_t i = 0; i < sizeof(this->leds); i++)
+        {
+            this->leds[i].on();
+        }
+    }
+
+    /*----- getter setter methods -----*/
+
+    void setStatus(GameStatus status) { this->status = status; }
+    GameStatus getStatus() { return this->status; }
+
+    void setMode(GameMode mode) { this->mode = mode; }
+
+    GameMode getMode() { return this->mode; }
+
+    int getNumberOfButtons() { return sizeof(this->buttons) / sizeof(this->buttons[0]); }
+    int getNumberOfLEDs() { return sizeof(this->leds) / sizeof(this->leds[0]); }
 };
