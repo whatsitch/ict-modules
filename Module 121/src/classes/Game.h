@@ -24,10 +24,10 @@ public:
     }
     void init()
     {
-        this->leds[0] = LED(6);
-        this->leds[1] = LED(7);
-        this->leds[2] = LED(8);
-        this->leds[3] = LED(9);
+        this->leds[0] = LED(6, YELLOW);
+        this->leds[1] = LED(7, BLUE);
+        this->leds[2] = LED(8, RED);
+        this->leds[3] = LED(9, GREEN);
         this->buttons[0] = Button(2);
         this->buttons[1] = Button(3);
         this->buttons[2] = Button(4);

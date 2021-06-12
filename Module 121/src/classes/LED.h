@@ -1,11 +1,13 @@
 #ifndef LED_H
 #define LED_H
+#include "../miscellaneous/Colour.h"
+
 class LED {
   private:
     byte pin;
   public:
     LED() {}
-    LED(byte pin) {
+    LED(byte pin, Colour colour) {
       // Use 'this->' to make the difference between the
       // 'pin' attribute of the class and the 
       // local variable 'pin' created from the parameter.
