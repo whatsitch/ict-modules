@@ -15,17 +15,17 @@ class LED {
       init();
     }
     void init() {
-      pinMode(pin, OUTPUT);
+      pinMode(this->pin, OUTPUT);
       // Always try to avoid duplicate code.
       // Instead of writing digitalWrite(pin, LOW) here,
       // call the function off() which already does that
       off();
     }
     void on() {
-      digitalWrite(pin, HIGH);
+      digitalWrite(this->pin, HIGH);
     }
     void off() {
-      digitalWrite(pin, LOW);
+      digitalWrite(this->pin, LOW);
     }
 }; 
 #endif

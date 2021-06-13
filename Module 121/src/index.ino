@@ -1,14 +1,17 @@
+/****************************************************************
+ * Name:      Senso
+ * Author:    Marco Eugster, Noel Schneider, Nils Baumann
+ * Datum:     13.06.2021
+ * Version:   1.0
+****************************************************************/
+
 #include "./classes/Button.h"
 #include "./classes/LED.h"
 #include "./classes/Game.h"
 #include "./miscellaneous/GameStatus.h"
 #include "./miscellaneous/GameMode.h"
 
-/****************************************************************
- * 
- * Author: Marco Eugster, Noel Schneider, Nils Baumann
- *  
-****************************************************************/
+
 Game game = Game();
 
 void setup()
@@ -20,7 +23,7 @@ void setup()
 
 void loop()
 {
-  game.debug();
+
   game.validateStartStopButton();
 
   if (game.getStatus() == IDLE)
@@ -42,6 +45,7 @@ void loop()
     {
       game.startLightAndSoundSequence();
     }
+
     delay(100);
     game.readUserSequence();
   }

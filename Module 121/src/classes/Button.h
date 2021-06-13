@@ -25,9 +25,6 @@ public:
   }
   void update()
   {
-    // You can handle the debounce of the button directly
-    // in the class, so you don't have to think about it
-    // elsewhere in your code
     byte newReading = digitalRead(this->pin);
 
     if (newReading != this->lastReading)
@@ -36,7 +33,6 @@ public:
     }
     if (millis() - this->lastDebounceTime > this->debounceDelay)
     {
-      // Update the 'state' attribute only if debounce is checked
       this->state = newReading;
     }
     this->lastReading = newReading;
@@ -57,7 +53,6 @@ public:
       }
       if (millis() - this->lastDebounceTime > this->debounceDelay)
       {
-        // Update the 'state' attribute only if debounce is checked
         this->state = newReading;
       }
       this->lastReading = newReading;

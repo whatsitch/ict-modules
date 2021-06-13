@@ -39,14 +39,12 @@ public:
         this->frequencies[1] = Piezo(12, 800);
         this->frequencies[2] = Piezo(12, 600);
         this->frequencies[3] = Piezo(12, 400);
-        //this->gameModeButton = Button(10);
-        //this->startStopButton = Button(13);
-        //piezo pin 12
     }
 
     void validateStartStopButton()
     {
         if(!this->startStopButton.isPressed()) { return; }
+
         if (this->getStatus() == OFFLINE)
         {
             if (this->startStopButton.isPressed())
@@ -73,32 +71,25 @@ public:
 
     void awaitUserInteraction()
     {
-        // Serial.println("Await interaction");
         for (size_t i = 0; i < this->getNumberOfLEDs(); i++)
         {
             this->leds[i].on();
             if (this->gameModeButton.isPressed())
             {
                 this->turnLedsOff();
-                //Serial.println("gamemode button pressed once!");
                 this->setMode(LIGHT);
                 this->leds[0].on();
                 if (this->gameModeButton.isPressed(100))
                 {
-                    //Serial.println("gamemode button pressed twice!");
                     this->leds[1].on();
                     this->setMode(SOUND);
 
                     if (this->gameModeButton.isPressed(100))
                     {
-                        //Serial.println("gamemode button pressed for the third time!");
-
                         this->leds[2].on();
                         this->setMode(LIGHTANDSOUND);
-                        //this->status = INIT;
                         if (this->gameModeButton.isPressed(300))
                         {
-                            //Serial.println("gamemode button pressed for the fourth time! - resetting");
                             this->turnLedsOff();
                             this->setMode(OFF);
                             delay(1500);
@@ -112,13 +103,7 @@ public:
 
             if (this->getMode() != OFF)
             {
-                //Serial.println("statsu before:");
-                //Serial.println(this->getStatus());
                 this->setStatus(PLAYING);
-                //Serial.println("now playing with mode:");
-                //Serial.println(this->getMode());
-                //Serial.println("status now:");
-                // Serial.println(this->getStatus());
             }
         }
         this->turnLedsOff();
@@ -199,23 +184,11 @@ public:
         {
             for (size_t i = 0; i < this->getNumberOfButtons() && buttonReleased == false; i++)
             {
-                //Serial.println("sizeof buttons:");
                 int number = this->getNumberOfButtons();
-                //Serial.println(number);
-                //Serial.println("sizeof leds: ");
                 int number2 = this->getNumberOfLEDs();
-                // Serial.println(number2);
-                //Serial.println("okay=");
-                //Serial.println("index:");
-                //Serial.println(i);
                 if (this->buttons[i].isPressed())
                 {
-                    //Serial.println("inside getPressedButton:");
-                    //Serial.println("Index:");
-                    //Serial.println(i);
                     pressedButton = i;
-                    // Serial.println("pressed Button: ");
-                    // Serial.println(pressedButton);
                     this->leds[i].on();
                     while (currentMillis - previousMillis < delay & buttonReleased == false)
                     {
@@ -296,7 +269,6 @@ public:
     {
         int base = 1500;
         int delay = base - floor((pow(this->memoryIndex, 2.65)));
-        Serial.println(delay);
         if (delay < 200)
         {
             return 200;
@@ -304,11 +276,6 @@ public:
         return delay;
     };
 
-    void debug()
-    {
-        Serial.println("is startStopButton pressed");
-        Serial.println(this->startStopButton.isPressed());
-    }
     int getNumberOfButtons() { return sizeof(this->buttons) / sizeof(this->buttons[0]); }
 
     int getNumberOfLEDs() { return sizeof(this->leds) / sizeof(this->leds[0]); }
