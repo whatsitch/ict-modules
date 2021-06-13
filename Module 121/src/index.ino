@@ -20,11 +20,7 @@ void setup()
 
 void loop()
 {
-  //game.debug();
-  //delay(1000);
-  //return;
-  //game.debug();
-  //delay(1000);
+  game.debug();
   game.validateStartStopButton();
 
   if (game.getStatus() == IDLE)

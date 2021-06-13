@@ -46,33 +46,29 @@ public:
 
     void validateStartStopButton()
     {
-        //Serial.println("validateStartStopButton");
+        if(!this->startStopButton.isPressed()) { return; }
         if (this->getStatus() == OFFLINE)
         {
-            //Serial.println("status == 0ffline");
             if (this->startStopButton.isPressed())
             {
-                //Serial.println("button pressed");
                 if (this->getStatus() == OFFLINE)
                 {
                     this->setStatus(IDLE);
-                    //Serial.println("Testing");
-                    //Serial.println(this->status);
                 }
-                delay(1000);
+                delay(1500);
+                this->startStopButton.update();
+                return;
             }
         }
-        /*else
+        else
         {
             if (this->startStopButton.isPressed())
             {
-
-                Serial.println("SHUTING DOWN....");
-                Serial.println(this->status);
                 this->setStatus(OFFLINE);
-                Serial.println(this->status);
+                delay(1500);
+                this->startStopButton.update();
             }
-        }*/
+        }
     }
 
     void awaitUserInteraction()
@@ -151,6 +147,7 @@ public:
         {
             delay(100);
             this->frequencies[memory[i]].makeSound(this->getSequenceLightDelay());
+            delay(this->getSequenceLightDelay());
         }
     }
 
@@ -309,8 +306,8 @@ public:
 
     void debug()
     {
-        this->memoryIndex++;
-        Serial.println(this->getSequenceLightDelay());
+        Serial.println("is startStopButton pressed");
+        Serial.println(this->startStopButton.isPressed());
     }
     int getNumberOfButtons() { return sizeof(this->buttons) / sizeof(this->buttons[0]); }
 
