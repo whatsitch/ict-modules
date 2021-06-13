@@ -82,12 +82,6 @@ public:
   }
   bool isPressed(int delayn)
   {
-    Serial.println("inside delay isPressed: ");
-    Serial.println("getstate:");
-    Serial.println(getState(delayn));
-    Serial.println(getState(delayn) == HIGH);
-    Serial.println("pin:");
-    Serial.println(this->pin);
     delay(1000);
     return (getState(delayn) == HIGH);
   }

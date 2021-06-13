@@ -20,6 +20,11 @@ void setup()
 
 void loop()
 {
+  //game.debug();
+  //delay(1000);
+  //return;
+  //game.debug();
+  //delay(1000);
   game.validateStartStopButton();
 
   if (game.getStatus() == IDLE)
@@ -35,9 +40,11 @@ void loop()
     }
     else if (game.getMode() == SOUND)
     {
+      game.startSoundSequence();
     }
     else if (game.getMode() == LIGHTANDSOUND)
     {
+      game.startLightAndSoundSequence();
     }
     delay(100);
     game.readUserSequence();

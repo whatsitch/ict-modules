@@ -1,5 +1,6 @@
 #include "Button.h"
 #include "LED.h"
+#include "Piezo.h"
 #include "../miscellaneous/GameStatus.h"
 #include "../miscellaneous/GameMode.h"
 #include "../miscellaneous/Colour.h"
@@ -9,13 +10,14 @@ class Game
 private:
     LED leds[4];
     Button buttons[4];
+    Piezo frequencies[4];
     Button startStopButton = Button(11);
     Button gameModeButton = Button(10);
-
     GameStatus status;
     GameMode mode;
     int memory[100];
     int memoryIndex = 0;
+    int sequenceLightDelay;
 
 public:
     Game()
@@ -33,6 +35,10 @@ public:
         this->buttons[1] = Button(3);
         this->buttons[2] = Button(4);
         this->buttons[3] = Button(5);
+        this->frequencies[0] = Piezo(12, 1000);
+        this->frequencies[1] = Piezo(12, 800);
+        this->frequencies[2] = Piezo(12, 600);
+        this->frequencies[3] = Piezo(12, 400);
         //this->gameModeButton = Button(10);
         //this->startStopButton = Button(13);
         //piezo pin 12
@@ -43,15 +49,15 @@ public:
         //Serial.println("validateStartStopButton");
         if (this->getStatus() == OFFLINE)
         {
-            Serial.println("status == 0ffline");
+            //Serial.println("status == 0ffline");
             if (this->startStopButton.isPressed())
             {
-                Serial.println("button pressed");
+                //Serial.println("button pressed");
                 if (this->getStatus() == OFFLINE)
                 {
                     this->setStatus(IDLE);
-                    Serial.println("Testing");
-                    Serial.println(this->status);
+                    //Serial.println("Testing");
+                    //Serial.println(this->status);
                 }
                 delay(1000);
             }
@@ -78,25 +84,25 @@ public:
             if (this->gameModeButton.isPressed())
             {
                 this->turnLedsOff();
-                Serial.println("gamemode button pressed once!");
+                //Serial.println("gamemode button pressed once!");
                 this->setMode(LIGHT);
                 this->leds[0].on();
                 if (this->gameModeButton.isPressed(100))
                 {
-                    Serial.println("gamemode button pressed twice!");
+                    //Serial.println("gamemode button pressed twice!");
                     this->leds[1].on();
                     this->setMode(SOUND);
 
                     if (this->gameModeButton.isPressed(100))
                     {
-                        Serial.println("gamemode button pressed for the third time!");
+                        //Serial.println("gamemode button pressed for the third time!");
 
                         this->leds[2].on();
                         this->setMode(LIGHTANDSOUND);
                         //this->status = INIT;
                         if (this->gameModeButton.isPressed(300))
                         {
-                            Serial.println("gamemode button pressed for the fourth time! - resetting");
+                            //Serial.println("gamemode button pressed for the fourth time! - resetting");
                             this->turnLedsOff();
                             this->setMode(OFF);
                             delay(1500);
@@ -110,32 +116,57 @@ public:
 
             if (this->getMode() != OFF)
             {
-                Serial.println("statsu before:");
-                Serial.println(this->getStatus());
+                //Serial.println("statsu before:");
+                //Serial.println(this->getStatus());
                 this->setStatus(PLAYING);
-                Serial.println("now playing with mode:");
-                Serial.println(this->getMode());
-                Serial.println("status now:");
-                Serial.println(this->getStatus());
+                //Serial.println("now playing with mode:");
+                //Serial.println(this->getMode());
+                //Serial.println("status now:");
+                // Serial.println(this->getStatus());
             }
         }
         this->turnLedsOff();
     }
 
-    /*----- LIGHT mode -----*/
-
     void startLightSequence()
     {
         delay(500);
-        this->memory[this->memoryIndex] = getRandomNumber(4);
-        this->memoryIndex++;
+        this->updateGameMemory();
         delay(500);
         for (size_t i = 0; i < this->memoryIndex; i++)
         {
-            delay(300);
+            delay(100);
             this->leds[memory[i]].on();
-            delay(700);
+            delay(this->getSequenceLightDelay());
             this->leds[memory[i]].off();
+        }
+    }
+
+    void startSoundSequence()
+    {
+        delay(500);
+        this->updateGameMemory();
+        delay(500);
+        for (size_t i = 0; i < this->memoryIndex; i++)
+        {
+            delay(100);
+            this->frequencies[memory[i]].makeSound(this->getSequenceLightDelay());
+        }
+    }
+
+    void startLightAndSoundSequence()
+    {
+        delay(500);
+        this->updateGameMemory();
+        delay(500);
+        for (size_t i = 0; i < this->memoryIndex; i++)
+        {
+            delay(100);
+            this->leds[memory[i]].on();
+            this->frequencies[memory[i]].makeSound(this->getSequenceLightDelay());
+            delay(this->getSequenceLightDelay());
+            this->leds[memory[i]].off();
+            delay(100);
         }
     }
 
@@ -173,7 +204,7 @@ public:
             {
                 //Serial.println("sizeof buttons:");
                 int number = this->getNumberOfButtons();
-                Serial.println(number);
+                //Serial.println(number);
                 //Serial.println("sizeof leds: ");
                 int number2 = this->getNumberOfLEDs();
                 // Serial.println(number2);
@@ -186,8 +217,8 @@ public:
                     //Serial.println("Index:");
                     //Serial.println(i);
                     pressedButton = i;
-                    Serial.println("pressed Button: ");
-                    Serial.println(pressedButton);
+                    // Serial.println("pressed Button: ");
+                    // Serial.println(pressedButton);
                     this->leds[i].on();
                     while (currentMillis - previousMillis < delay & buttonReleased == false)
                     {
@@ -212,10 +243,16 @@ public:
         return pressedButton;
     }
 
-    /*----- get a random number between 0 and n -----*/
+    /*----- get a random number between 0 and n (0, n included) -----*/
     int getRandomNumber(int upperBound)
     {
         return random() % upperBound;
+    }
+
+    void updateGameMemory()
+    {
+        this->memory[this->memoryIndex] = getRandomNumber(4);
+        this->memoryIndex++;
     }
 
     /*----- LED handling -----*/
@@ -258,6 +295,23 @@ public:
 
     GameMode getMode() { return this->mode; }
 
+    int getSequenceLightDelay()
+    {
+        int base = 1500;
+        int delay = base - floor((pow(this->memoryIndex, 2.65)));
+        Serial.println(delay);
+        if (delay < 200)
+        {
+            return 200;
+        }
+        return delay;
+    };
+
+    void debug()
+    {
+        this->memoryIndex++;
+        Serial.println(this->getSequenceLightDelay());
+    }
     int getNumberOfButtons() { return sizeof(this->buttons) / sizeof(this->buttons[0]); }
 
     int getNumberOfLEDs() { return sizeof(this->leds) / sizeof(this->leds[0]); }
