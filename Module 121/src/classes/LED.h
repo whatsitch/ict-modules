@@ -5,10 +5,12 @@
 class LED {
   private:
     byte pin;
+    Colour colour;
   public:
     LED() {}
     LED(byte pin, Colour colour) {
       this->pin = pin;
+      this->colour = colour;
       init();
     }
     void init() {
