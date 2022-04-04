@@ -1,133 +1,69 @@
 <?php
 
-/*
- * https://stackoverflow.com/questions/737385/easiest-form-validation-library-for-php
- *https://formr.github.io/
- * https://github.com/blackbelt/php-validation/blob/master/Validator.php
- */
+use JetBrains\PhpStorm\Pure;
 
-class Validator
-{
-    private $messages = array();
-    private $errors = array();
-    private $fields = array();
-    private $rules = array();
+/*----- classes -----*/
+require_once "Classes/Form.php";
+require_once "Classes/Rule.php";
+require_once "Classes/Validator.php";
+require_once "Classes/Field.php";
+/*----- enum types -----*/
+require_once "Enums/ActionType.php";
+require_once "Enums/InputType.php";
+require_once "Enums/ValidationRule.php";
 
-    private function setRule()
-    {
-
-    }
-}
-
-/*----- TODO: import from redaxo -----*/
-
-enum InputType: string
-{
-    case TEXT = "text";
-    case TEXTAREA = "textarea";
-    case DATE = "date";
-    case EMAIL = "email";
-    case URL = "url";
-    case PHONE_NUMBER = "tel";
-    case NUMBER = "number";
-    case SUBMIT = "submit";
-    case RESET = "reset";
-    case HIDDEN = "hidden";
-}
-
-class Field
-{
-    private InputType $type;
-    private string $label;
-
-    public function setLabel(string $label)
-    {
-        $this->label = $label;
-    }
-}
-
-class Form
-{
-    private $method = "POST";
-    private array $fields;
-
-    public function addTextField($name, $value = null, array $attributes = [])
-    {
-        $field = $this->addInputField(InputType::TEXT, $name, $value, $attributes);
-        $this->addElement($field);
-
-    }
-
-    private function addElement($element)
-    {
-        array_push($this->fields, $element);
-    }
-
-    public function addTextAreaField(string $name, $value = null, array $attributes = [])
-    {
-
-        $field = $this->addInputField(InputType::TEXTAREA, $name, $value, $attributes);
-        $this->addElement($field);
-    }
-
-    public function addSelectField(string $name, $value = null, array $attributes = [])
-    {
-
-    }
-
-    private function addInputField(InputType $type, $name, $value = null, array $attributes = [], $addElement = true)
-    {
-        $attributes['type'] = $type;
-        return $this->addField('input', $name, $value, $attributes, $addElement);
-    }
-
-    private function addField(InputType $type, $name, $value = null, array $attributes = [], $addElement = true)
-    {
-        // $element = $this->createElement($tag, $name, $value, $attributes);
-
-        /* if ($addElement) {
-             $this->addElement($element);
-             return $element;
-         }
-
-         return $element;*/
-        return $field;
-    }
-
-
-    public function get()
-    {
-
-    }
-
-}
-
-enum ActionType: string
-{
-    case SAVE = 'save';
-    case PRESET = "preset";
-    case DELETE = 'delete';
-}
 
 $output = '';
 
 
+/*----- POST submit validation -----*/
 if (isset($_POST['action'])) {
 
 
     $action = ActionType::from($_POST['action']);
 
     $output = $_POST['action'];
-    var_dump($_POST);
+    // var_dump($_POST);
 
 
     if ($action === ActionType::SAVE) {
-        var_dump("SAVE");
+        //   var_dump("SAVE");
     }
 
     $test = $_POST['action'];
 }
 
+
+$form = new Form('field', 'form_name', 'POST');
+
+/*----- text field -----*/
+$field = $form->addTextField('name');
+$field->setLabel('Nachname');
+$field->getValidator()->add(ValidationRule::NOT_EMPTY, 'Dieses Feld wird benötigt!');
+$field->getValidator()->add(ValidationRule::MIN, "MIN 3 ", ['min' => 3]);
+
+/*----- text field -----*/
+$field = $form->addTextField('first-name');
+$field->setLabel('Vorname');
+
+/*----- email field -----*/
+$field = $form->addEmailField('email');
+$field->setLabel('E-Mail');
+$field->getValidator()->add(ValidationRule::EMAIL, 'E-Mail ungültig!');
+
+/*----- date field -----*/
+$field = $form->addInputField(InputType::DATE, 'date');
+$field->setLabel('Geburtsdatum');
+$field->getValidator()->add(ValidationRule::NOT_EMPTY, 'Datum wird benötigt');
+
+/*----- text area field -----*/
+$field = $form->addTextAreaField('description', 'default value');
+$field->setLabel('Beschreibung');
+
+/*----- custom regex field -----*/
+$field = $form->addTextField(INPUTTYPE::TEXT, 'regex');
+$field->setLabel('Regex');
+$field->getValidator()->add(ValidationRule::MATCH, 'Ungültig', ['regex' => '@^\w+://(?:[\w-]+\.)*[\w-]+(?::\d+)?(?:/.*)?$@u']);
 
 ?>
 
@@ -139,22 +75,11 @@ if (isset($_POST['action'])) {
     <head>
         <title></title>
 <body>
-<form method="post">
-    <h1>Demonstration...</h1>
-    <h3>...HTML/Tutorials/Formulare erstellen und gestalten</h3>
-    <P>Machen Sie eine Eingabe, wir schicken Ihnen diese wieder zurück.</p>
+<h1>Formular - Demo </h1>
+<?php
+/*----- display form -----*/
+$form->get();
+?>
 
-    <h1><?= $output; ?> </h1>
-
-    <label for="input">Eingabefeld</label>
-    <input id="input" name="test" value="..."/>
-    <button name="action" value="save" type="submit">abschicken</button>
-    <br/>
-    <button name="action" value="delete" type="submit">Eingabefeld löschen und abschicken</button>
-    <br/>
-    <button name="action" value="preset" type="submit">leeres Eingabefeld mit VORGABE füllen</button>
-
-
-</form>
 </body>
 </html>

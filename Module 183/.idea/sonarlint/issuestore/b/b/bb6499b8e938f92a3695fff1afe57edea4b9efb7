@@ -1,23 +1,0 @@
-
-N	php:S1135"4Complete the task associated to this "TODO" comment.(âÍ³Óùÿÿÿÿ
-A	php:S1144",Remove this unused private "setrule" method.(áğ¢
-G	php:S1172I"-Remove the unused function parameter "$name".(‚ºÔãÿÿÿÿÿ
-H	php:S1172I".Remove the unused function parameter "$value".(‚ºÔãÿÿÿÿÿ
-T	php:S1172I"3Remove the unused function parameter "$attributes".(‚ºÔãÿÿÿÿÿ8…áöáı/
-G	php:S1172T"-Remove the unused function parameter "$type".(åËßÒùÿÿÿÿ
-G	php:S1172T"-Remove the unused function parameter "$name".(åËßÒùÿÿÿÿ
-H	php:S1172T".Remove the unused function parameter "$value".(åËßÒùÿÿÿÿ
-T	php:S1172T"3Remove the unused function parameter "$attributes".(åËßÒùÿÿÿÿ8…áöáı/
-T	php:S1172T"3Remove the unused function parameter "$addElement".(åËßÒùÿÿÿÿ8…áöáı/
-G	php:S1068"-Remove this unused "$messages" private field.(åÖ‘€şÿÿÿÿ
-?	php:S1068"+Remove this unused "$errors" private field.(õé­t
-E	php:S1068"+Remove this unused "$fields" private field.(ßÈÂ›ùÿÿÿÿ
-D	php:S1068"*Remove this unused "$rules" private field.(¬ÏŸ‹ûÿÿÿÿ
-C	php:S1068(")Remove this unused "$type" private field.(§€„úÿÿÿÿ
-@	php:S10683"+Remove this unused "$method" private field.(ÆÂ¦Ê
-	php:S1186"lAdd a nested comment explaining why this method is empty, throw an Exception or complete the implementation.(áğ¢
-†	php:S1186I"lAdd a nested comment explaining why this method is empty, throw an Exception or complete the implementation.(‚ºÔãÿÿÿÿÿ
-	php:S1186b"lAdd a nested comment explaining why this method is empty, throw an Exception or complete the implementation.(ä÷Ÿ
-Kphp:S836^"2Review the data-flow - use of uninitialized value.(ë†îĞùÿÿÿÿ
-8php:S125X"Remove this commented out code.(ÚË˜üÿÿÿÿ
-3php:S125V"Remove this commented out code.(ûİéª
