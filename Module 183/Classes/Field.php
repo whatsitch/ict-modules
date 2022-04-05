@@ -119,7 +119,6 @@ class Field
 
     private function getCheckboxField(string $fullName): string
     {
-        var_dump($this->value);
         $checked = $this->value == 'on' ? "checked" : '';
         return "<input type='checkbox' id='$fullName' name='$fullName' $checked/>";
     }
@@ -142,7 +141,7 @@ class Field
                 InputType::DATE => "<input type='date' id='$fullName' name='$fullName' value='$this->value' />",
                 InputType::EMAIL => "<input type='email' id='$fullName' name='$fullName' value='$this->value'/>",
                 InputType::URL => "<input type='url' id='$fullName' name='$fullName' value='$this->value'/>",
-                InputType::PHONE_NUMBER => '',
+                InputType::PHONE_NUMBER => "<input type='tel' id='$fullName' name='$fullName' value='$this->value'>",
                 InputType::NUMBER => '',
                 InputType::SUBMIT => '',
                 InputType::RESET => '',

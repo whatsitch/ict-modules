@@ -29,6 +29,12 @@ $field = $form->addEmailField('email');
 $field->setLabel('E-Mail');
 $field->getValidator()->add(ValidationRule::EMAIL, 'E-Mail ungültig!');
 
+/*----- phone number field -----*/
+$field = $form->addInputField(InputType::PHONE_NUMBER, 'phone_number');
+$field->setLabel('Telefonnummer*');
+$field->getValidator()->add(ValidationRule::NOT_EMPTY, 'Telefonnummer wird benötigt');
+$field->getValidator()->add(ValidationRule::PHONE_NUMBER, 'Telefonnummer ungültig');
+
 /*----- date field -----*/
 $field = $form->addInputField(InputType::DATE, 'date');
 $field->setLabel('Geburtsdatum');

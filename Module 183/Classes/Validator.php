@@ -35,6 +35,7 @@ class Validator
                 ValidationRule::MATCH => $this->match($value, $this->getRuleOption($rule, 'regex')),
                 ValidationRule::NOT_MATCH => $this->notMatch($value, $this->getRuleOption($rule, 'regex')),
                 ValidationRule::VALUES => $this->values($value, $this->getRuleOption($rule, 'values')),
+                ValidationRule::PHONE_NUMBER => $this->phoneNumber($value),
             };
             if (!$isValid) {
                 $this->setMessage($rule->getMessage());
@@ -194,6 +195,11 @@ class Validator
     public function url(string $value): bool
     {
         return $this->match($value, '@^\w+://(?:[\w-]+\.)*[\w-]+(?::\d+)?(?:/.*)?$@u');
+    }
+
+    public function phoneNumber(string $value): bool
+    {
+        return $this->match($value, '/^(?:(?:|0{1,2}|\+{0,2})41(?:|\(0\))|0)([1-9]\d)(\d{3})(\d{2})(\d{2})$/');
     }
 
 }

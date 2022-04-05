@@ -145,7 +145,8 @@ class Form
                 $this->processPostValues();
                 $result = $this->validate();
                 if ($result === true) {
-                    var_dump("validation success");
+                    /*----- Validation successfully completed -----*/
+                    echo "Formular ist gültig";
                 } else {
                     $this->showErrorList();
                 }

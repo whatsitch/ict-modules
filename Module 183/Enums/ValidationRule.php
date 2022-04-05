@@ -11,4 +11,5 @@ enum ValidationRule: string
     case MATCH = 'match';
     case NOT_MATCH = 'notMatch';
     case VALUES = 'values';
+    case PHONE_NUMBER = 'phoneNumber';
 }
