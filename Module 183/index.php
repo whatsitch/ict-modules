@@ -14,14 +14,15 @@ require_once "Enums/ValidationRule.php";
 $form = new Form('field', 'form_name', 'POST');
 
 /*----- text field -----*/
+$field = $form->addTextField('first-name');
+$field->setLabel('Vorname');
+
+
+/*----- text field with validation rules-----*/
 $field = $form->addTextField('name');
 $field->setLabel('Nachname');
 $field->getValidator()->add(ValidationRule::NOT_EMPTY, 'Dieses Feld wird benötigt!');
 $field->getValidator()->add(ValidationRule::MIN, "MIN 3 ", ['min' => 3]);
-
-/*----- text field -----*/
-$field = $form->addTextField('first-name');
-$field->setLabel('Vorname');
 
 /*----- email field -----*/
 $field = $form->addEmailField('email');
@@ -36,6 +37,20 @@ $field->getValidator()->add(ValidationRule::NOT_EMPTY, 'Datum wird benötigt');
 /*----- text area field -----*/
 $field = $form->addTextAreaField('description', 'default value');
 $field->setLabel('Beschreibung');
+
+/*----- select field -----*/
+$field = $form->addSelectField('country', null, ['values' => ['Switzerland', 'Netherlands', 'Germany']]);
+$field->setLabel('Länder');
+
+/*----- url field -----*/
+$field = $form->addTextField('website');
+$field->setLabel('Website');
+$field->getValidator()->add(ValidationRule::URL, 'URL ist ungültig');
+
+/*----- checkbox field -----*/
+$field = $form->addCheckboxField('AGB');
+$field->setLabel('Akzeptieren Sie die AGB');
+$field->getValidator()->add(ValidationRule::NOT_EMPTY, 'Sie müssen die AGB akzeptieren!');
 
 /*----- custom regex field -----*/
 $field = $form->addTextField('regex', 'regex');

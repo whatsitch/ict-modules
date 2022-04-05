@@ -24,7 +24,7 @@ class Form
 
     public function elementPostValue($fieldsetName, $fieldName, $default = null)
     {
-        if (isset($_POST[$fieldsetName])) {
+        if (isset($_POST[$fieldsetName]) && isset($_POST[$fieldsetName][$fieldName])) {
             return  htmlspecialchars($_POST[$fieldsetName][$fieldName]);
         }
         return $default;
@@ -43,11 +43,7 @@ class Form
 
     private function addField(InputType $type, string $name, $value = null, array $attributes = []): Field
     {
-        $field = $this->createField($type, $name, $value, $attributes);
-        // $field = new Field($type, $name, $value, $attributes);
-        //$this->addElement($field);
-
-        return $field;
+        return $this->createField($type, $name, $value, $attributes);
     }
 
     private function createField(InputType $type, string $name, $value = null, array $attributes = []): Field
@@ -104,9 +100,13 @@ class Form
         return $this->addInputField(InputType::TEXTAREA, $name, $value, $attributes);
     }
 
-    public function addSelectField(string $name, $value = null, array $attributes = [])
+    public function addSelectField(string $name, $value = null, array $attributes = []): Field
     {
-
+        return $this->addInputField(InputType::SELECT, $name, $value, $attributes);
+    }
+    public function addCheckboxField(string $name, $value = null, array $attributes = []): Field
+    {
+        return $this->addInputField(InputType::CHECKBOX, $name, $value, $attributes);
     }
 
     private function processPostValues()
@@ -151,16 +151,13 @@ class Form
                 }
             }
             if ($action === ActionType::PRESET) {
-                //  $this->processPostValues();
                 foreach ($this->fields as $field) {
-                    var_dump($field->getDefaultValue());
                     $field->useDefaultValue();
                 }
             }
-
         }
 
-        $form = "<form method='$this->method'><div class='container'>";
+        $form = "<form name='$this->name' method='$this->method'><div class='container'>";
 
         /*----- get fields -----*/
         foreach ($this->fields as $field) {

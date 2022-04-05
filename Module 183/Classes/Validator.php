@@ -21,7 +21,7 @@ class Validator
         return $this->rules;
     }
 
-    public function isValid($value)
+    public function isValid($value): bool
     {
         foreach ($this->getRules() as $rule) {
             $isValid = match ($rule->getType()) {
@@ -33,14 +33,23 @@ class Validator
                 ValidationRule::URL => $this->url($value),
                 ValidationRule::EMAIL => $this->email($value),
                 ValidationRule::MATCH => $this->match($value, $this->getRuleOption($rule, 'regex')),
-                ValidationRule::NOT_MATCH => throw new \Exception('To be implemented'),
-                ValidationRule::VALUES => throw new \Exception('To be implemented'),
-                ValidationRule::CUSTOM => throw new \Exception('To be implemented'),
+                ValidationRule::NOT_MATCH => $this->notMatch($value, $this->getRuleOption($rule, 'regex')),
+                ValidationRule::VALUES => $this->values($value, $this->getRuleOption($rule, 'values')),
             };
             if (!$isValid) {
                 $this->setMessage($rule->getMessage());
             }
         }
+        return empty($this->messages);
+    }
+
+    private function getRuleOption(Rule $rule, string $key)
+    {
+        $options = $rule->getOption();
+        if (!isset($options[$key])) {
+            throw new Error("$key property missing");
+        }
+        return $options[$key];
     }
 
     public function getMessages(): array
@@ -81,6 +90,19 @@ class Validator
     }
 
     /**
+     * Checks whether the value does not match the given regex.
+     *
+     * @param string $value
+     * @param string $regex
+     *
+     * @return bool
+     */
+    public function notMatch(string $value, string $regex): bool
+    {
+        return !$this->match($value, $regex);
+    }
+
+    /**
      * Checks whether the value is an email address.
      *
      * @param mixed $value
@@ -89,16 +111,6 @@ class Validator
     private function email(mixed $value): bool
     {
         return $this->match($value, '/^[\w.-]+@[\w.-]+\.[a-z]{2,}$/ui');
-    }
-
-
-    private function getRuleOption(Rule $rule, string $key)
-    {
-        $options = $rule->getOption();
-        if (!isset($options[$key])) {
-            throw new Error("$key property missing");
-        }
-        return $options[$key];
     }
 
     /**
@@ -138,11 +150,12 @@ class Validator
      */
     public function min(Rule $rule, mixed $value): bool
     {
-        if(!is_numeric($value)) {
+        if (!is_numeric($value)) {
             return false;
         }
         return $value >= $this->getRuleOption($rule, 'min');
     }
+
     /**
      * Checks whether the value is equal or lower than the given max value.
      *
@@ -152,10 +165,24 @@ class Validator
      */
     public function max(Rule $rule, mixed $value): bool
     {
-        if(!is_numeric($value)) {
+        if (!is_numeric($value)) {
             return false;
         }
         return $value <= $this->getRuleOption($rule, 'min');
+    }
+
+    /**
+     * Checks whether the value is one of the given valid values.
+     * @param mixed $value
+     * @param array $validValues
+     * @return bool
+     */
+    public function values(mixed $value, array $validValues): bool
+    {
+        if ($value == null) {
+            return false;
+        }
+        return in_array($value, $validValues);
     }
 
     /**

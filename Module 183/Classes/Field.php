@@ -96,13 +96,32 @@ class Field
         return !empty($this->getMessages());
     }
 
-    #[Pure] private function formatMessage(): string
+    private function formatMessage(): string
     {
         $messages = $this->validator->getMessages();
         if ($messages != null && isset($messages[0])) {
             return "<p>$messages[0]</p>";
         }
         return "";
+    }
+
+    private function getSelectField(string $fullName): string
+    {
+        $output = "<select id='$fullName' name='$fullName'/>";
+        foreach($this->attributes['values'] as $option) {
+            $selected = $this->value == $option ? "selected='$this->value'" : '';
+                $output .= "<option value='$option' $selected>$option</option>";
+        }
+        $output .= "</select>";
+
+        return $output;
+}
+
+    private function getCheckboxField(string $fullName): string
+    {
+        var_dump($this->value);
+        $checked = $this->value == 'on' ? "checked" : '';
+        return "<input type='checkbox' id='$fullName' name='$fullName' $checked/>";
     }
 
 
@@ -118,6 +137,8 @@ class Field
             $output .= match ($this->type) {
                 InputType::TEXT => "<input type='text' id='$fullName' name='$fullName' value='$this->value'/>",
                 InputType::TEXTAREA => "<textarea id='$fullName' name='$fullName' rows='5'>$this->value</textarea>",
+                InputType::SELECT => $this->getSelectField($fullName),
+                InputType::CHECKBOX => $this->getCheckboxField($fullName),
                 InputType::DATE => "<input type='date' id='$fullName' name='$fullName' value='$this->value' />",
                 InputType::EMAIL => "<input type='email' id='$fullName' name='$fullName' value='$this->value'/>",
                 InputType::URL => "<input type='url' id='$fullName' name='$fullName' value='$this->value'/>",

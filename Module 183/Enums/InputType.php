@@ -3,6 +3,8 @@ enum InputType: string
 {
     case TEXT = "text";
     case TEXTAREA = "textarea";
+    case SELECT = "select";
+    case CHECKBOX = "checkbox";
     case DATE = "date";
     case EMAIL = "email";
     case URL = "url";
