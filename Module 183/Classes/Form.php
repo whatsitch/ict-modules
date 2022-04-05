@@ -25,7 +25,7 @@ class Form
     public function elementPostValue($fieldsetName, $fieldName, $default = null)
     {
         if (isset($_POST[$fieldsetName])) {
-            return $_POST[$fieldsetName][$fieldName];
+            return  htmlspecialchars($_POST[$fieldsetName][$fieldName]);
         }
         return $default;
     }
@@ -53,9 +53,17 @@ class Form
     private function createField(InputType $type, string $name, $value = null, array $attributes = []): Field
     {
         $id = $this->getId($name);
-        $postValue = $this->elementPostValue($this->fieldset, $name);
-        if (null !== $postValue) {
-            $value = $postValue;
+        if (isset($_POST['action'])) {
+            $action = ActionType::from($_POST['action']);
+            if ($action === ActionType::SAVE) {
+                /*----- get POST value -----*/
+                $postValue = $this->elementPostValue($this->fieldset, $name);
+                if (null !== $postValue) {
+                    $value = $postValue;
+                }
+            } else if($action === ActionType::DELETE) {
+                $value = '';
+            }
         }
         $attributes = array_merge(['id' => $id], $attributes);
         $field = new Field($type, $name, $value, $attributes);
@@ -108,6 +116,7 @@ class Form
             $field->setValue($fieldValue);
         }
     }
+
     /**
      * display error message summary
      */
@@ -115,7 +124,7 @@ class Form
     {
         echo "<h3>Formular unvollständig:</h3>";
         foreach ($this->fields as $field) {
-            if($field->hasMessage()) {
+            if ($field->hasMessage()) {
                 echo "<p>" . $field->getLabelName() . "</p>";
                 echo '<ul>';
                 foreach ($field->getMessages() as $message) {
@@ -129,23 +138,42 @@ class Form
 
     public function get()
     {
-        $this->processPostValues();
-        $result = $this->validate();
-        if ($result === true) {
-            var_dump("validation success");
-        } else {
-            $this->showErrorList();
+        if (isset($_POST['action'])) {
+            $action = ActionType::from($_POST['action']);
+
+            if ($action === ActionType::SAVE) {
+                $this->processPostValues();
+                $result = $this->validate();
+                if ($result === true) {
+                    var_dump("validation success");
+                } else {
+                    $this->showErrorList();
+                }
+            }
+            if ($action === ActionType::PRESET) {
+                //  $this->processPostValues();
+                foreach ($this->fields as $field) {
+                    var_dump($field->getDefaultValue());
+                    $field->useDefaultValue();
+                }
+            }
+
         }
 
-        $form = "<form method='$this->method'>";
+        $form = "<form method='$this->method'><div class='container'>";
 
         /*----- get fields -----*/
         foreach ($this->fields as $field) {
+            $form .= "<div class='row'>";
             $form .= $field->get();
+            $form .= "</div>";
         }
-        $form .= '<button name="action" value="save" type="submit">abschicken</button>';
-
-        $form .= "</form>";
+        $form .= '<div class="actions">';
+        $form .= '<button name="action" value="save" type="submit">senden</button>';
+        $form .= '<button name="action" value="preset" type="submit">zurücksetzen</button>';
+        $form .= '<button name="action" value="delete" type="submit">löschen</button>';
+        $form .= '</div>';
+        $form .= "</div</form>";
 
         echo $form;
 

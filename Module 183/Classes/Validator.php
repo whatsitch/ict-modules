@@ -158,7 +158,6 @@ class Validator
         return $value <= $this->getRuleOption($rule, 'min');
     }
 
-
     /**
      * Checks whether the value is an URL.
      *

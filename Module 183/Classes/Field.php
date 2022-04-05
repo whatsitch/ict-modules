@@ -10,6 +10,7 @@ class Field
     private string $name;
     private string $fieldName;
     private mixed $value;
+    private mixed $defaultValue;
     private array $attributes;
 
     private Validator $validator;
@@ -17,8 +18,8 @@ class Field
     #[Pure] public function __construct(InputType $type, string $name, mixed $value, $attributes)
     {
         $this->type = $type;
-        $this->name = $name;
-        $this->value = $value;
+        $this->name = $name != null ? htmlspecialchars($name) : '';
+        $this->value = $this->defaultValue = $value != null ? htmlspecialchars($value) : '';
         $this->attributes = $attributes;
         $this->validator = new Validator();
     }
@@ -53,6 +54,16 @@ class Field
     {
         return $this->value;
     }
+    public function setDefaultValue(mixed $value) {
+       $this->defaultValue = $value;
+    }
+    public function useDefaultValue() {
+        $this->value = $this->defaultValue;
+    }
+    public function getDefaultValue(): mixed
+    {
+        return $this->defaultValue;
+    }
 
     public function setLabel(string $label)
     {
@@ -62,7 +73,12 @@ class Field
     #[Pure] private function formatLabel(): string
     {
         $fullName = $this->getFullName();
-        return "<label for='$fullName'>$this->label</label>";
+        return "
+            <div class='col-25'>
+            <label for='$fullName'>$this->label</label>
+            </div>
+        ";
+
     }
 
     private function getFullName(): string
@@ -84,7 +100,7 @@ class Field
     {
         $messages = $this->validator->getMessages();
         if ($messages != null && isset($messages[0])) {
-            return $messages[0];
+            return "<p>$messages[0]</p>";
         }
         return "";
     }
@@ -97,12 +113,12 @@ class Field
     private function formatInput(): string
     {
         $fullName = $this->getFullName();
-        $output = '';
+        $output = '<div class="col-75">';
         try {
             $output .= match ($this->type) {
                 InputType::TEXT => "<input type='text' id='$fullName' name='$fullName' value='$this->value'/>",
                 InputType::TEXTAREA => "<textarea id='$fullName' name='$fullName' rows='5'>$this->value</textarea>",
-                InputType::DATE =>  "<input type='date' id='$fullName' name='$fullName' value='$this->value' />",
+                InputType::DATE => "<input type='date' id='$fullName' name='$fullName' value='$this->value' />",
                 InputType::EMAIL => "<input type='email' id='$fullName' name='$fullName' value='$this->value'/>",
                 InputType::URL => "<input type='url' id='$fullName' name='$fullName' value='$this->value'/>",
                 InputType::PHONE_NUMBER => '',
@@ -112,6 +128,7 @@ class Field
                 InputType::HIDDEN => '',
             };
             $output .= $this->formatMessage();
+            $output .= "</div>";
         } catch (Exception $exception) {
             var_dump($exception);
         } finally {
