@@ -455,24 +455,29 @@
   },
   "packageFolders": {
     "C:\\Users\\marco\\.nuget\\packages\\": {},
-    "D:\\Microsoft\\Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "X:\\Github\\ict-modules\\Module 151\\M151-1\\Task-02\\Task-02.csproj",
+      "projectUniqueName": "D:\\Github\\ict-modules\\Module 151\\M151-1\\Task-02\\Task-02.csproj",
       "projectName": "Task-02",
-      "projectPath": "X:\\Github\\ict-modules\\Module 151\\M151-1\\Task-02\\Task-02.csproj",
+      "projectPath": "D:\\Github\\ict-modules\\Module 151\\M151-1\\Task-02\\Task-02.csproj",
       "packagesPath": "C:\\Users\\marco\\.nuget\\packages\\",
-      "outputPath": "X:\\Github\\ict-modules\\Module 151\\M151-1\\Task-02\\obj\\",
+      "outputPath": "D:\\Github\\ict-modules\\Module 151\\M151-1\\Task-02\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "D:\\Microsoft\\Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
         "C:\\Users\\marco\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
