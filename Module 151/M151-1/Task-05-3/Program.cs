@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
 
-
 try
 {
     using (SqlConnection conn = new SqlConnection())

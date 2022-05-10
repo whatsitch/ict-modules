@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
 
-
 try
 {
     using (SqlConnection conn = new SqlConnection())
@@ -27,6 +26,5 @@ catch (Exception e)
     Console.WriteLine("database not found");
     Console.WriteLine(e);
 }
-
 
 Console.ReadLine();
