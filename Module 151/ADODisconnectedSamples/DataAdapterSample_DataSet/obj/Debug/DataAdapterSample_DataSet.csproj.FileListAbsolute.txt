@@ -1,0 +1,6 @@
+D:\GBSSG_2017_18\M151\Projects\ADODisconnectedSamples\DataAdapterSample_DataSet\bin\Debug\DataAdapterSample.exe.config
+D:\GBSSG_2017_18\M151\Projects\ADODisconnectedSamples\DataAdapterSample_DataSet\bin\Debug\DataAdapterSample.exe
+D:\GBSSG_2017_18\M151\Projects\ADODisconnectedSamples\DataAdapterSample_DataSet\bin\Debug\DataAdapterSample.pdb
+D:\GBSSG_2017_18\M151\Projects\ADODisconnectedSamples\DataAdapterSample_DataSet\obj\Debug\DataAdapterSample_DataSet.csproj.CoreCompileInputs.cache
+D:\GBSSG_2017_18\M151\Projects\ADODisconnectedSamples\DataAdapterSample_DataSet\obj\Debug\DataAdapterSample.exe
+D:\GBSSG_2017_18\M151\Projects\ADODisconnectedSamples\DataAdapterSample_DataSet\obj\Debug\DataAdapterSample.pdb

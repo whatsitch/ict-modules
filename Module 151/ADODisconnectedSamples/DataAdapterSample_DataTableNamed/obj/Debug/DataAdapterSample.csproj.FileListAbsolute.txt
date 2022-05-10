@@ -1,0 +1,19 @@
+D:\Visual C# 2012 Buch 1\Beispiele\Kapitel 33\DataAdapterSample\DataAdapterSample\bin\Debug\DataAdapterSample.exe.config
+D:\Visual C# 2012 Buch 1\Beispiele\Kapitel 33\DataAdapterSample\DataAdapterSample\bin\Debug\DataAdapterSample.exe
+D:\Visual C# 2012 Buch 1\Beispiele\Kapitel 33\DataAdapterSample\DataAdapterSample\bin\Debug\DataAdapterSample.pdb
+D:\Visual C# 2012 Buch 1\Beispiele\Kapitel 33\DataAdapterSample\DataAdapterSample\obj\Debug\DataAdapterSample.csprojResolveAssemblyReference.cache
+D:\Visual C# 2012 Buch 1\Beispiele\Kapitel 33\DataAdapterSample\DataAdapterSample\obj\Debug\DataAdapterSample.exe
+D:\Visual C# 2012 Buch 1\Beispiele\Kapitel 33\DataAdapterSample\DataAdapterSample\obj\Debug\DataAdapterSample.pdb
+D:\Eigene Bücher\VISUAL STUDIO 2015\Visual C# 2012 Buch 1\Beispiele\Kapitel 33\DataAdapterSample\DataAdapterSample\bin\Debug\DataAdapterSample.exe.config
+D:\Eigene Bücher\VISUAL STUDIO 2015\Visual C# 2012 Buch 1\Beispiele\Kapitel 33\DataAdapterSample\DataAdapterSample\obj\Debug\DataAdapterSample.exe
+D:\Eigene Bücher\VISUAL STUDIO 2015\Visual C# 2012 Buch 1\Beispiele\Kapitel 33\DataAdapterSample\DataAdapterSample\obj\Debug\DataAdapterSample.pdb
+D:\Eigene Bücher\VISUAL STUDIO 2015\Visual C# 2012 Buch 1\Beispiele\Kapitel 33\DataAdapterSample\DataAdapterSample\bin\Debug\DataAdapterSample.exe
+D:\Eigene Bücher\VISUAL STUDIO 2015\Visual C# 2012 Buch 1\Beispiele\Kapitel 33\DataAdapterSample\DataAdapterSample\bin\Debug\DataAdapterSample.pdb
+D:\Eigene Bücher\VISUAL STUDIO 2015\Visual C# 2012 Buch 1\Beispiele\Kapitel 33\DataAdapterSample\DataAdapterSample\obj\Debug\DataAdapterSample.csprojResolveAssemblyReference.cache
+D:\GBSSG_2017_18\M151\Projects\ADODisconnectedSamples\DataAdapterSample\bin\Debug\DataAdapterSample.exe.config
+D:\GBSSG_2017_18\M151\Projects\ADODisconnectedSamples\DataAdapterSample\bin\Debug\DataAdapterSample.exe
+D:\GBSSG_2017_18\M151\Projects\ADODisconnectedSamples\DataAdapterSample\bin\Debug\DataAdapterSample.pdb
+D:\GBSSG_2017_18\M151\Projects\ADODisconnectedSamples\DataAdapterSample\obj\Debug\DataAdapterSample.csprojResolveAssemblyReference.cache
+D:\GBSSG_2017_18\M151\Projects\ADODisconnectedSamples\DataAdapterSample\obj\Debug\DataAdapterSample.csproj.CoreCompileInputs.cache
+D:\GBSSG_2017_18\M151\Projects\ADODisconnectedSamples\DataAdapterSample\obj\Debug\DataAdapterSample.exe
+D:\GBSSG_2017_18\M151\Projects\ADODisconnectedSamples\DataAdapterSample\obj\Debug\DataAdapterSample.pdb

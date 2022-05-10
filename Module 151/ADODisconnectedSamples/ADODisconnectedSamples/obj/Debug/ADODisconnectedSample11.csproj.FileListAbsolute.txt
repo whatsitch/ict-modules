@@ -1,0 +1,12 @@
+C:\GBSSG_2016_17\M151\Projects\ADODisconnectedSamples\ADODisconnectedSamples\bin\Debug\ADODisconnectedSamples.exe.config
+C:\GBSSG_2016_17\M151\Projects\ADODisconnectedSamples\ADODisconnectedSamples\bin\Debug\ADODisconnectedSamples.exe
+C:\GBSSG_2016_17\M151\Projects\ADODisconnectedSamples\ADODisconnectedSamples\bin\Debug\ADODisconnectedSamples.pdb
+C:\GBSSG_2016_17\M151\Projects\ADODisconnectedSamples\ADODisconnectedSamples\obj\Debug\ADODisconnectedSample11.csprojResolveAssemblyReference.cache
+C:\GBSSG_2016_17\M151\Projects\ADODisconnectedSamples\ADODisconnectedSamples\obj\Debug\ADODisconnectedSamples.exe
+C:\GBSSG_2016_17\M151\Projects\ADODisconnectedSamples\ADODisconnectedSamples\obj\Debug\ADODisconnectedSamples.pdb
+D:\GBSSG_2017_18\M151\Projects\ADODisconnectedSamples\ADODisconnectedSamples\bin\Debug\ADODisconnectedSamples.exe.config
+D:\GBSSG_2017_18\M151\Projects\ADODisconnectedSamples\ADODisconnectedSamples\bin\Debug\ADODisconnectedSamples.exe
+D:\GBSSG_2017_18\M151\Projects\ADODisconnectedSamples\ADODisconnectedSamples\bin\Debug\ADODisconnectedSamples.pdb
+D:\GBSSG_2017_18\M151\Projects\ADODisconnectedSamples\ADODisconnectedSamples\obj\Debug\ADODisconnectedSample11.csproj.CoreCompileInputs.cache
+D:\GBSSG_2017_18\M151\Projects\ADODisconnectedSamples\ADODisconnectedSamples\obj\Debug\ADODisconnectedSamples.exe
+D:\GBSSG_2017_18\M151\Projects\ADODisconnectedSamples\ADODisconnectedSamples\obj\Debug\ADODisconnectedSamples.pdb
